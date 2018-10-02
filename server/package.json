@@ -4,11 +4,12 @@
   "description": "Starter kit for creating React and Express apps",
   "main": "server.js",
   "scripts": {
-    "client-install": "cd client && npm install",
+    "client-install": "cd.. && cd client && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client": "cd.. && cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd.. && cd client && npm install && npm run build"
   },
   "author": "Brad Traversy",
   "license": "MIT",
@@ -19,6 +20,7 @@
     "body-parser": "^1.18.3",
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
-    "mongoose": "^5.2.15"
+    "mongoose": "^5.2.15",
+    "path": "^0.12.7"
   }
 }
