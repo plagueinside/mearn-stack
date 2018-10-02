@@ -8,6 +8,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const db = require('./config/config').mongoURI;
+
+mongoose.connect(db, {useNewUrlParser: true})
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
+
 app.use('/api/items', routes);
 
 // Serve static assets if in production
@@ -18,12 +24,6 @@ if(process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-
-const db = require('./config/config').mongoURI;
-
-mongoose.connect(db, {useNewUrlParser: true})
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
 
 const port = process.env.PORT || 5000;
 
