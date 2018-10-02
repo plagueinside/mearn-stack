@@ -8,6 +8,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use('/api/items', routes);
+
 // Serve static assets if in production
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -23,7 +25,6 @@ mongoose.connect(db, {useNewUrlParser: true})
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.use('/api/items', routes);
 const port = process.env.PORT || 5000;
 
 
