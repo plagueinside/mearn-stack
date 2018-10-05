@@ -1,29 +1,53 @@
 import React, { Component } from 'react';
 import AppNavbar from './components/AppNavbar';
-import ShoppingList from './components/ShoppingList';
-import ItemModal from './components/itemModal';
 import { Container } from 'reactstrap';
-
-import { Provider } from 'react-redux';
-import store from './store';
+import { Switch, Router, Route } from 'react-router-dom';
+import LoginPage from './components/LoginPage/LoginPage';
+import HomePage from './components/HomePage/HomePage';
+import { history } from './helpers/history';
+import { alertActions } from './actions/alertActions';
+import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    const { dispatch } = this.props;
+    history.listen((location, action) => {
+      // clear alert on location change
+      dispatch(alertActions.clear());
+    });
+  }
+
   render() {
+    const { alert } = this.props;
     return (
-      <Provider store={store}>
-        <div className="App">
-          <AppNavbar />
-          <Container>
-            <ItemModal />
-            <ShoppingList />
-          </Container>
-        </div>
-      </Provider>
+      <div className="App">
+        <AppNavbar />
+        <Container>
+          {alert.message &&
+            <div className={`alert ${alert.type}`}>{alert.message}</div>
+          }
+          <Router history={history}>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/login" component={LoginPage} />
+            </Switch>
+          </Router>
+        </Container>
+      </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  const { alert } = state;
+  return {
+    alert
+  };
+}
+
+export default connect(mapStateToProps)(App);
