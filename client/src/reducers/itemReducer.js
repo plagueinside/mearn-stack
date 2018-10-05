@@ -1,4 +1,4 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from '../constants/types';
+import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from '../constants';
 
 const initialState = {
 	items: [],

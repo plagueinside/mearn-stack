@@ -1,7 +1,7 @@
-import { userConstants } from '../constants/userConstants';
+import { userConstants } from '../constants';
 import { userService } from '../services/userService';
 import { alertActions } from './alertActions';
-import { history } from '../helpers/history';
+import { history } from '../helpers';
 
 const login = (username, password) => {
     const request = user => { return { type: userConstants.LOGIN_REQUEST, user } }

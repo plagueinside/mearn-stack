@@ -4,8 +4,8 @@ import { Container } from 'reactstrap';
 import { Switch, Router, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import HomePage from './components/HomePage/HomePage';
-import { history } from './helpers/history';
-import { alertActions } from './actions/alertActions';
+import { history } from './helpers';
+import { alertActions } from './actions';
 import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
