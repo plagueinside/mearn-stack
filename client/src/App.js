@@ -7,6 +7,7 @@ import HomePage from './components/HomePage/HomePage';
 import { history } from './helpers';
 import { alertActions } from './actions';
 import { connect } from 'react-redux';
+import { PrivateRoute } from './privateRoute/PrivateRoute';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
@@ -33,7 +34,7 @@ class App extends Component {
           }
           <Router history={history}>
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <PrivateRoute exact path="/" component={HomePage} />
               <Route path="/login" component={LoginPage} />
             </Switch>
           </Router>

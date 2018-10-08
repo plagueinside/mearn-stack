@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const login = (username, password) => {
 	return axios
-		.post(`/api/users/authenticate`, JSON.stringify({ username, password }))
+		.post(`/api/users/authenticate`, { username, password })
 		.then(handleResponse)
 		.then(user => {
 			// login successful if there's a jwt token in the response
@@ -13,7 +13,8 @@ const login = (username, password) => {
 			}
 
 			return user;
-		});
+		})
+		.catch(err => handleResponse(err.response));
 }
 
 const logout = () => {
@@ -43,21 +44,18 @@ const _delete = id => {
 }
 
 const handleResponse = response => {
-	return response.text().then(text => {
-		const data = text && JSON.parse(text);
-		if (!response.ok) {
-			if (response.status === 401) {
-				// auto logout if 401 response returned from api
-				logout();
-				//location.reload(true);
-			}
-
-			const error = (data && data.message) || response.statusText;
-			return Promise.reject(error);
+	if (!response.data.ok) {
+		if (response.status === 401) {
+			// auto logout if 401 response returned from api
+			logout();
+			//window.location.reload(true);
 		}
 
-		return data;
-	});
+		const error = (response && response.message) || response.statusText;
+		return Promise.reject(error);
+	}
+
+	return response;
 }
 
 export const userService = {
