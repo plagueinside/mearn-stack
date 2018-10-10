@@ -19,8 +19,8 @@ router.post('/authenticate', (req, res) => {
 				return res.status(500).send(err);
 			}
 			if (item.length) {
-				Utils.generateJWT();
-				return res.status(200).send({ ok: true });
+				let token = Utils.generateJWT();
+				return res.status(200).send({ ok: true, token });
 			} else {
 				return res.status(401).send({ ok: false, message });
 			}
