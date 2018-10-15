@@ -4,6 +4,7 @@ import { Container } from 'reactstrap';
 import { Switch, Router, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import HomePage from './components/HomePage/HomePage';
+import RegisterPage from './components/RegisterPage/RegisterPage'
 import { history } from './helpers';
 import { alertActions } from './actions';
 import { connect } from 'react-redux';
@@ -36,6 +37,7 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/" component={HomePage} />
               <Route path="/login" component={LoginPage} />
+              <Route path="/register" component={RegisterPage} />
             </Switch>
           </Router>
         </Container>
