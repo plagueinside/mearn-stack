@@ -31,7 +31,9 @@ const getById = id => {
 }
 
 const register = user => {
-	return axios.post(`/api/users/register`, JSON.stringify(user)).then(handleResponse);
+	return axios
+		.post(`/api/users/register`, user)
+		.then(handleResponse);
 }
 
 const update = user => {
@@ -44,14 +46,15 @@ const _delete = id => {
 }
 
 const handleResponse = response => {
-	if (!response.data.ok) {
+	console.log(response);
+	if (response.status !== 200) {
 		if (response.status === 401) {
 			// auto logout if 401 response returned from api
 			logout();
 			//window.location.reload(true);
 		}
 
-		const error = (response && response.message) || response.statusText;
+		const error = (response && response.data) || response.statusText;
 		return Promise.reject(error);
 	}
 

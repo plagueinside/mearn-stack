@@ -1,8 +1,54 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
 import { userActions } from '../../actions/userActions';
+import {
+	Avatar,
+	Button,
+	CssBaseline,
+	FormControl,
+	FormControlLabel,
+	Checkbox,
+	Input,
+	InputLabel,
+	Paper,
+	Typography, 
+} from '@material-ui/core';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block', // Fix IE11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(500 + theme.spacing.unit * 3 * 2)]: {
+      width: 500,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
+  },
+});
 
 class LoginPage extends Component {
 	constructor(props) {
@@ -13,8 +59,7 @@ class LoginPage extends Component {
 
 		this.state = {
 			username: '',
-			password: '',
-			submitted: false
+			password: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -29,7 +74,6 @@ class LoginPage extends Component {
 	handleSubmit = e => {
 		e.preventDefault();
 
-		this.setState({ submitted: true });
 		const { username, password } = this.state;
 		const { dispatch } = this.props;
 		if (username && password) {
@@ -38,38 +82,76 @@ class LoginPage extends Component {
 	}
 
 	render() {
-		const { loggingIn } = this.props;
-		const { username, password, submitted } = this.state;
+		const { loggingIn, classes } = this.props;
+		const { username, password } = this.state;
 		return (
-			<div className="col-md-6 col-md-offset-3">
-				<h2>Login</h2>
-				<form name="form" onSubmit={this.handleSubmit}>
-					<div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
-						<label htmlFor="username">Username</label>
-						<input type="text" className="form-control" name="username" value={username} onChange={this.handleChange} />
-						{submitted && !username &&
-							<div className="help-block">Username is required</div>
-						}
-					</div>
-					<div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-						<label htmlFor="password">Password</label>
-						<input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-						{submitted && !password &&
-							<div className="help-block">Password is required</div>
-						}
-					</div>
-					<div className="form-group">
-						<button className="btn btn-primary">Login</button>
-						{loggingIn &&
-							<img alt="" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-						}
-						<Link to="/register" className="btn btn-link">Register</Link>
-					</div>
-				</form>
-			</div>
+			<Fragment>
+				<CssBaseline />
+				<main className={classes.layout}>
+					<Paper className={classes.paper}>
+						<Avatar className={classes.avatar}>
+							<LockIcon />
+						</Avatar>
+						<Typography component="h1" variant="h5">
+							Sign in
+						</Typography>
+						<form className={classes.form} name="form" onSubmit={this.handleSubmit}>
+							<FormControl 
+								margin="normal" 
+								required 
+								fullWidth
+							>
+								<InputLabel htmlFor="username">Username</InputLabel>
+								<Input
+									id="username" 
+									name="username" 
+									value={username} 
+									onChange={this.handleChange} 
+								/>
+							</FormControl>
+							<FormControl
+								margin="normal" 
+								required 
+								fullWidth
+							>
+								<InputLabel htmlFor="password">Password</InputLabel>
+								<Input
+									name="password"
+									type="password"
+									id="password" 
+									value={password} 
+									onChange={this.handleChange}
+								/>
+							</FormControl>
+							<FormControlLabel
+								control={<Checkbox value="remember" color="primary" />}
+								label="Remember me"
+							/>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								color="primary"
+								className={classes.submit}
+							>
+								Sign in
+							</Button>
+							{loggingIn &&
+								<img alt="" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+							}
+							<Link to="/change-password" className="btn btn-link">Forgot a password?</Link>
+							<Link to="/register" className="btn btn-link">Register</Link>
+						</form>
+					</Paper>
+				</main>
+			</Fragment>
 		);
 	}
 }
+
+LoginPage.propTypes = {
+	classes: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => {
 	const { loggingIn } = state.authentication;
@@ -78,4 +160,4 @@ const mapStateToProps = state => {
 	};
 }
 
-export default connect(mapStateToProps)(LoginPage);
+export default connect(mapStateToProps)(withStyles(styles)(LoginPage));
