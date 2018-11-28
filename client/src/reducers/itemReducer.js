@@ -1,8 +1,10 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from '../actions/types';
+import { GET_ITEMS, ADD_ITEM, CREATE_ITEM, ITEMS_LOADING } from '../constants';
 
 const initialState = {
-	items: [],
-	loading: false
+	steps: [],
+	loading: false,
+	error: false, 
+	end: false
 }
 
 export default function (state = initialState, action) {
@@ -10,18 +12,20 @@ export default function (state = initialState, action) {
 		case GET_ITEMS:
 			return {
 				...state,
-				items: action.payload,
+				steps: action.payload,
 				loading: false
 			}
-		case DELETE_ITEM:
+		case CREATE_ITEM:
 			return {
 				...state,
-				items: state.items.filter(item => item._id !== action.payload)
+				steps: [action.payload.data],
+				error: action.payload.error,
+				end: action.payload.end
 			}
 		case ADD_ITEM:
 			return {
 				...state,
-				items: [action.payload, ...state.items]
+				steps: [action.payload]
 			}
 		case ITEMS_LOADING:
 			return {

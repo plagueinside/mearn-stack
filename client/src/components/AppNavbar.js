@@ -9,6 +9,7 @@ import {
   NavLink,
   Container
 } from 'reactstrap';
+import { connect } from 'react-redux';
 
 class AppNavbar extends Component {
   state = {
@@ -22,24 +23,29 @@ class AppNavbar extends Component {
   }
 
   render() {
+    const { loggedIn } = this.props;
     return (
       <div>
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <NavbarBrand href="/">
-              ShoppingList
+              Добро пожаловать
             </NavbarBrand>
-            <NavbarToggler onClick={this.toogle}>
-            </NavbarToggler>
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className='ml-auto' navbar>
-                <NavItem>
-                  <NavLink href="https://vk.com/">
-                    VK
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Collapse>
+            {loggedIn &&
+              <NavbarToggler onClick={this.toogle}>
+              </NavbarToggler>
+            }
+            {loggedIn &&
+              <Collapse isOpen={this.state.isOpen} navbar>
+                <Nav className='ml-auto' navbar>
+                  <NavItem>
+                    <NavLink href="/login">
+                      Logout
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+              </Collapse>
+            }
           </Container>
         </Navbar>
       </div>
@@ -47,4 +53,11 @@ class AppNavbar extends Component {
   }
 }
 
-export default AppNavbar;
+const mapStateToProps = state => {
+	const { loggedIn } = state.authentication;
+	return {
+		loggedIn
+	};
+}
+
+export default connect(mapStateToProps)(AppNavbar);
