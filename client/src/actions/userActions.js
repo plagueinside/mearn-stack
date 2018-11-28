@@ -14,7 +14,7 @@ const login = (username, password) => {
 			.then(
 				user => {
 					dispatch(success(user));
-					history.push('/');
+					history.push('/main');
 				},
 				error => {
 					dispatch(failure(error.toString()));
@@ -40,7 +40,7 @@ const register = user => {
 			.then(
 				user => {
 					dispatch(success());
-					history.push('/login');
+					history.push('/');
 					dispatch(alertActions.success('Registration successful'));
 				},
 				error => {

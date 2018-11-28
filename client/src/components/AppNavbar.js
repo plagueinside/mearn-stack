@@ -29,7 +29,7 @@ class AppNavbar extends Component {
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <NavbarBrand href="/">
-              ShoppingList
+              Nice to meet you
             </NavbarBrand>
             {loggedIn &&
               <NavbarToggler onClick={this.toogle}>
@@ -39,7 +39,7 @@ class AppNavbar extends Component {
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className='ml-auto' navbar>
                   <NavItem>
-                    <NavLink href="/login">
+                    <NavLink href="/">
                       Logout
                     </NavLink>
                   </NavItem>
