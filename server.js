@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const itemRoutes = require('./routes/api/items');
 const userRoutes = require('./routes/api/users');
+const stepRoutes = require('./routes/api/steps');
 
 const app = express();
 
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true})
 
 app.use('/api/items', itemRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/steps', stepRoutes)
 
 // Serve static assets if in production
 if(process.env.NODE_ENV === 'production') {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Item = require('../../core/db/models/item');
+const Step = require('../../core/db/models/steps');
 
 //@route GET api/items
 //@desc Create A Post
@@ -20,6 +21,15 @@ router.post('/', (req, res) => {
 //@access Public
 router.get('/', (req, res) => {
     Item.find()
+        .sort({date: -1})
+        .then(items => res.json(items))
+});
+
+//@route POST api/items
+//@desc Get All items
+//@access Public
+router.get('/steps', (req, res) => {
+    Step.find()
         .sort({date: -1})
         .then(items => res.json(items))
 });

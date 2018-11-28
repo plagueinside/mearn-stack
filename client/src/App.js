@@ -3,12 +3,11 @@ import AppNavbar from './components/AppNavbar';
 import { Container } from 'reactstrap';
 import { Switch, Router, Route } from 'react-router-dom';
 import HomePage from './components/HomePage/HomePage';
-import RegisterPage from './components/RegisterPage/RegisterPage'
-import VisitPage from './components/VisitPage/VisitPage'
 import { history } from './helpers';
 import { alertActions } from './actions';
 import { connect } from 'react-redux';
 import { PrivateRoute } from './privateRoute/PrivateRoute';
+import LoginPage from './components/LoginPage/LoginPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
@@ -22,16 +21,6 @@ class App extends Component {
       // clear alert on location change
       dispatch(alertActions.clear());
     });
-
-    this.state = {
-			open: false
-    };
-    
-    this.openModal = this.openModal.bind(this);
-  }
-
-  openModal() {
-    this.setState({open: true})
   }
 
   render() {
@@ -46,8 +35,7 @@ class App extends Component {
           <Router history={history}>
             <Switch>
               <PrivateRoute exact path="/main" component={HomePage} />
-              <Route path="/register" component={RegisterPage} />
-              <Route path="/" component={VisitPage} />
+              <Route path="/login" component={LoginPage} />
             </Switch>
           </Router>
         </Container>

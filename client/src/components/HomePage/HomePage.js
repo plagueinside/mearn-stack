@@ -8,7 +8,6 @@ class HomePage extends Component {
 	render() {
 		return (
 			<Container>
-				<ItemModal />
 				<ShoppingList />
 			</Container>
 		);

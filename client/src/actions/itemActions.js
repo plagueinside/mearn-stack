@@ -1,30 +1,31 @@
 import axios from 'axios';
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from '../constants';
+import { GET_ITEMS, ADD_ITEM, CREATE_ITEM, ITEMS_LOADING } from '../constants';
 
-export const getItems = () => dispatch => {
+export const getSteps = () => dispatch => {
 	dispatch(setItemsLoading());
 	axios
-		.get('/api/items')
+		.get('/api/steps')
 		.then(res => dispatch({
 			type: GET_ITEMS,
 			payload: res.data
 		}))
 };
 
-export const deleteItem = id => dispatch => {
-	axios.delete(`/api/items/${id}`)
-		.then(res => dispatch({
-			type: DELETE_ITEM,
-			payload: id
-		}))
-};
-
-export const addItem = item => dispatch => {
-	axios
-		.post('/api/items', item)
+export const createStep = () => dispatch => {
+	dispatch(setItemsLoading());
+	axios.post(`/api/steps`)
 		.then(res => dispatch({
 			type: ADD_ITEM,
 			payload: res.data
+		}))
+};
+
+export const nextStep = (answer, step) => dispatch => {
+	axios
+		.post('/api/steps/next', {answer, step})
+		.then(res => dispatch({
+			type: CREATE_ITEM,
+			payload: {data: res.data.data, error: res.data.error}
 		}))
 };
 
@@ -32,4 +33,4 @@ export const setItemsLoading = () => {
 	return {
 		type: ITEMS_LOADING
 	}
-}
+}	
