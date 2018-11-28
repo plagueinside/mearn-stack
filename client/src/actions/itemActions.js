@@ -25,7 +25,7 @@ export const nextStep = (answer, step) => dispatch => {
 		.post('/api/steps/next', {answer, step})
 		.then(res => dispatch({
 			type: CREATE_ITEM,
-			payload: {data: res.data.data, error: res.data.error}
+			payload: {data: res.data.data, error: res.data.error, end: res.data.end}
 		}))
 };
 

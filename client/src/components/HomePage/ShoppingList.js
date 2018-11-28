@@ -35,10 +35,11 @@ class ShoppingList extends Component {
 	}
 
   render() {
-    const { steps, loading, error }= this.props.item;
+    const { steps, loading, error, end }= this.props.item;
     const { answer } = this.state;
     let step = steps[0] ? steps[0].step: 0;
     let text = steps[0] ? steps[0].text: '';
+    console.log(end)
     return (
       <div>
       {(Boolean(+step) || loading) ? null :
@@ -58,14 +59,17 @@ class ShoppingList extends Component {
       }
       {Boolean(+step) ?
       <div>
-        <p>{text}</p> 
-        <input type="text" className="form-control" name="answer" value={answer} onChange={this.handleChange} />
-        <Button
-          colort="dark"
-          style={{ marginBottom: '2rem' }}
-          onClick={this.handleSubmit.bind(this, answer, step)}
-        >Ответить</Button>
-        {error ? <div className="help-block">Неправильный ответ!</div> : null}
+        <p>{text}</p>
+        { !end ?
+        <div>
+          <input type="text" className="form-control" name="answer" value={answer} onChange={this.handleChange} />
+          <Button
+            colort="dark"
+            style={{ marginBottom: '2rem' }}
+            onClick={this.handleSubmit.bind(this, answer, step)}
+          >Ответить</Button>
+          {error ? <div className="help-block">Неправильный ответ!</div> : null}
+        </div> : null}
       </div>
       : null}
       </div>
